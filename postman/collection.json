@@ -1,0 +1,385 @@
+{
+	"info": {
+		"_postman_id": "anjan011-rbac-collection",
+		"name": "Anjan011 RBAC API",
+		"description": "API collection for managing roles and permissions in the custom-rbac package.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "System Roles",
+			"item": [
+				{
+					"name": "List System Roles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{RBAC_API_ROOT}}/system-roles",
+							"host": [
+								"{{RBAC_API_ROOT}}"
+							],
+							"path": [
+								"system-roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View System Role",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{RBAC_API_ROOT}}/system-roles/1",
+							"host": [
+								"{{RBAC_API_ROOT}}"
+							],
+							"path": [
+								"system-roles",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create System Role",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Auditor\",\n    \"is_enabled\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{RBAC_API_ROOT}}/system-roles",
+							"host": [
+								"{{RBAC_API_ROOT}}"
+							],
+							"path": [
+								"system-roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update System Role",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Auditor Updated\",\n    \"is_enabled\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{RBAC_API_ROOT}}/system-roles/2",
+							"host": [
+								"{{RBAC_API_ROOT}}"
+							],
+							"path": [
+								"system-roles",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete System Role",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{RBAC_API_ROOT}}/system-roles/2",
+							"host": [
+								"{{RBAC_API_ROOT}}"
+							],
+							"path": [
+								"system-roles",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Custom Roles",
+			"item": [
+				{
+					"name": "List Custom Roles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{RBAC_API_ROOT}}/custom-roles",
+							"host": [
+								"{{RBAC_API_ROOT}}"
+							],
+							"path": [
+								"custom-roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Custom Role",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{RBAC_API_ROOT}}/custom-roles/10",
+							"host": [
+								"{{RBAC_API_ROOT}}"
+							],
+							"path": [
+								"custom-roles",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Custom Role",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Editor\",\n    \"is_enabled\": 1,\n    \"permissions\": [1, 2, 3]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{RBAC_API_ROOT}}/custom-roles",
+							"host": [
+								"{{RBAC_API_ROOT}}"
+							],
+							"path": [
+								"custom-roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Custom Role",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Editor Pro\",\n    \"is_enabled\": 1,\n    \"permissions\": [1, 2, 4]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{RBAC_API_ROOT}}/custom-roles/10",
+							"host": [
+								"{{RBAC_API_ROOT}}"
+							],
+							"path": [
+								"custom-roles",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Custom Role",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{RBAC_API_ROOT}}/custom-roles/10",
+							"host": [
+								"{{RBAC_API_ROOT}}"
+							],
+							"path": [
+								"custom-roles",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Permissions",
+			"item": [
+				{
+					"name": "List Permissions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{RBAC_API_ROOT}}/permissions",
+							"host": [
+								"{{RBAC_API_ROOT}}"
+							],
+							"path": [
+								"permissions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Permission",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{RBAC_API_ROOT}}/permissions/1",
+							"host": [
+								"{{RBAC_API_ROOT}}"
+							],
+							"path": [
+								"permissions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Permission",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"post.publish\",\n    \"type\": \"Custom\",\n    \"is_enabled\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{RBAC_API_ROOT}}/permissions",
+							"host": [
+								"{{RBAC_API_ROOT}}"
+							],
+							"path": [
+								"permissions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Permission",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"post.publish.v2\",\n    \"type\": \"Custom\",\n    \"is_enabled\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{RBAC_API_ROOT}}/permissions/10",
+							"host": [
+								"{{RBAC_API_ROOT}}"
+							],
+							"path": [
+								"permissions",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Permission",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{RBAC_API_ROOT}}/permissions/10",
+							"host": [
+								"{{RBAC_API_ROOT}}"
+							],
+							"path": [
+								"permissions",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{RBAC_API_TOKEN}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "RBAC_API_ROOT",
+			"value": "http://localhost/api/anjan011/roles-and-permissions",
+			"type": "string"
+		},
+		{
+			"key": "RBAC_API_TOKEN",
+			"value": "YOUR_TOKEN_HERE",
+			"type": "string"
+		}
+	]
+}

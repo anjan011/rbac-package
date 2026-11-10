@@ -2,7 +2,8 @@
 
     namespace Anjan011\RolesAndPermissions;
 
-    use Illuminate\Console\Events\CommandStarting;
+    use Illuminate\Console\Events\CommandFinished;
+    use Illuminate\Support\Facades\Artisan;
     use Illuminate\Support\Facades\Event;
     use Illuminate\Support\ServiceProvider;
 
@@ -59,12 +60,10 @@
                     Console\DumpPermissionsCommand::class,
                 ]);
 
-                // Listen for the package:discover command execution
-                Event::listen(CommandStarting::class, function (CommandStarting $event) {
+                // Listen for package:discover completion
+                Event::listen(CommandFinished::class, function (CommandFinished $event) {
                     if ($event->command === 'package:discover') {
-                        $this->app->booted(function () {
-                            $this->call(Console\SetupInstructionsCommand::class);
-                        });
+                        Artisan::call('anjan011-roles-permissions:setup-instructions', [], $event->output);
                     }
                 });
             }

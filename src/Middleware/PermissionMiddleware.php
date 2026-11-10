@@ -2,6 +2,7 @@
 
 namespace Anjan011\RolesAndPermissions\Middleware;
 
+use Anjan011\RolesAndPermissions\RolesAndPermissionsManager;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +21,7 @@ class PermissionMiddleware
         }
 
         try {
-            if (! $request->user()->hasAllPermissionsByName($permissions)) {
+            if (! RolesAndPermissionsManager::hasAllPermissionsByName($request->user()->getAuthIdentifier(), $permissions)) {
                 abort(403, 'You do not have the required permissions.');
             }
         } catch (\Exception $e) {

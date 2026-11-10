@@ -29,6 +29,12 @@ Install the package using Composer:
 composer require anjan011/roles-and-permissions
 ```
 
+After installation, you can see the next setup steps by running:
+
+```bash
+php artisan anjan011-roles-permissions:setup-instructions
+```
+
 #### Configuration Publication
 
 After installation, publish the configuration file:
@@ -278,6 +284,10 @@ To make these constants available globally, add the generated file to the `autol
 }
 ```
 Then run `composer dump-autoload`.
+
+### 6. Setup Instructions
+`php artisan anjan011-roles-permissions:setup-instructions`
+Lists the necessary steps to complete the setup of the package after installation.
 
 ---
 

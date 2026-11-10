@@ -3,8 +3,10 @@
 namespace Anjan011\RolesAndPermissions\Console;
 
 use Anjan011\RolesAndPermissions\Models\Role;
+use Anjan011\RolesAndPermissions\RolesAndPermissionsManager;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 
 class AssignRoleCommand extends Command
 {
@@ -27,6 +29,7 @@ class AssignRoleCommand extends Command
 
         $userIdCol = Config::get('anjan001.roles-and-permissions.user_id_column', 'id');
         $roleIdCol = Config::get('anjan001.roles-and-permissions.role_id_column', 'role_id');
+        $usersTable = Config::get('anjan001.roles-and-permissions.users_table_name', 'users');
 
         // Validate User
         if (! $userId && ! $userEmail) {
@@ -35,24 +38,25 @@ class AssignRoleCommand extends Command
             return 1;
         }
 
-        $userModel = Config::get('auth.providers.users.model', 'App\\Models\\User');
         $user = null;
 
         if ($userId) {
-            $user = (new $userModel)->where($userIdCol, $userId)->first();
+            $user = DB::table($usersTable)->where($userIdCol, $userId)->first();
             if (! $user) {
                 $this->error("User with ID {$userId} not found.");
 
                 return 1;
             }
         } else {
-            $user = (new $userModel)->where('email', $userEmail)->first();
+            $user = DB::table($usersTable)->where('email', $userEmail)->first();
             if (! $user) {
                 $this->error("User with email {$userEmail} not found.");
 
                 return 1;
             }
         }
+
+        $resolvedUserId = $user->$userIdCol;
 
         // Validate Role
         if (! $roleId && ! $roleName) {
@@ -83,16 +87,16 @@ class AssignRoleCommand extends Command
         $targetRoleName = $role->name;
 
         // Check if user already has the role
-        if (! $force && $user->hasRoleById($targetRoleId)) {
-            $this->info("User '{$user->name}' ({$user->email}, ID: {$user->$userIdCol}) already has the role '{$targetRoleName}'.");
+        if (! $force && RolesAndPermissionsManager::hasRoleById($resolvedUserId, $targetRoleId)) {
+            $this->info("User '{$user->name}' ({$user->email}, ID: {$resolvedUserId}) already has the role '{$targetRoleName}'.");
 
             return 0;
         }
 
         // Assign Role
         try {
-            $user->addRoleById($targetRoleId);
-            $this->info("Successfully assigned role '{$targetRoleName}' to user '{$user->name}' ({$user->email}, ID: {$user->$userIdCol}).");
+            RolesAndPermissionsManager::addRoleById($resolvedUserId, $targetRoleId);
+            $this->info("Successfully assigned role '{$targetRoleName}' to user '{$user->name}' ({$user->email}, ID: {$resolvedUserId}).");
 
             return 0;
         } catch (\Exception $e) {

@@ -47,6 +47,7 @@ class RolesAndPermissionsServiceProvider extends ServiceProvider
             // Register commands
             $this->commands([
                 Console\SetupCommand::class,
+                Console\SetupInstructionsCommand::class,
                 Console\TestCommand::class,
                 Console\ImportRolesCommand::class,
                 Console\ExportRolesCommand::class,

@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         $tableName = config('anjan001.roles-and-permissions.user_role_table', 'user_role_xref');
-        $userTable = config('anjan001.roles-and-permissions.user_table', 'users');
+        $userTable = config('anjan001.roles-and-permissions.users_table_name', 'users');
         $userIdCol = config('anjan001.roles-and-permissions.user_id_column', 'id');
         $rolesTable = config('anjan001.roles-and-permissions.roles_table', 'roles');
         $roleIdCol = config('anjan001.roles-and-permissions.role_id_column', 'role_id');

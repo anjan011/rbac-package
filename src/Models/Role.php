@@ -2,6 +2,7 @@
 
 namespace Anjan011\RolesAndPermissions\Models;
 
+use Anjan011\RolesAndPermissions\RolesAndPermissionsManager;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -25,7 +26,7 @@ class Role extends Model
                 $user = auth()->user();
                 $superAdminRoleId = config('anjan001.roles-and-permissions.super_admin_role_id', 1);
 
-                if (! $user || ! method_exists($user, 'hasRoleById') || ! $user->hasRoleById($superAdminRoleId)) {
+                if (! $user || ! RolesAndPermissionsManager::hasRoleById($user->getAuthIdentifier(), $superAdminRoleId)) {
                     throw new \Exception('System roles cannot be modified.');
                 }
             }
@@ -42,7 +43,7 @@ class Role extends Model
             if ($role->type === 'System') {
                 $user = auth()->user();
 
-                if (! $user || ! method_exists($user, 'hasRoleById') || ! $user->hasRoleById($superAdminRoleId)) {
+                if (! $user || ! RolesAndPermissionsManager::hasRoleById($user->getAuthIdentifier(), $superAdminRoleId)) {
                     throw new \Exception('System roles cannot be deleted.');
                 }
             }

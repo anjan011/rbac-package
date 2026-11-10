@@ -4,9 +4,11 @@ namespace Anjan011\RolesAndPermissions\Console;
 
 use Anjan011\RolesAndPermissions\Models\Permission;
 use Anjan011\RolesAndPermissions\Models\Role;
+use Anjan011\RolesAndPermissions\RolesAndPermissionsManager;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class SetupCommand extends Command
@@ -47,18 +49,14 @@ class SetupCommand extends Command
                 return 1;
             }
 
-            $userModelClass = Config::get('auth.providers.users.model', 'App\\Models\\User');
             $userIdCol = config('anjan001.roles-and-permissions.user_id_column', 'id');
+            $usersTable = config('anjan001.roles-and-permissions.users_table_name', 'users');
 
             foreach ($superAdminIds as $userId) {
-                $user = (new $userModelClass)->where($userIdCol, $userId)->first();
+                $user = DB::table($usersTable)->where($userIdCol, $userId)->first();
                 if ($user) {
-                    if (method_exists($user, 'addRoleById')) {
-                        $user->addRoleById(1);
-                        $this->line("Assigned Super Admin role to user ID: $userId");
-                    } else {
-                        $this->warn("User ID $userId found, but UseRolesAndPermissions trait is missing from the model.");
-                    }
+                    RolesAndPermissionsManager::addRoleById($userId, 1);
+                    $this->line("Assigned Super Admin role to user ID: $userId");
                 } else {
                     $this->warn("User with ID $userId not found.");
                 }

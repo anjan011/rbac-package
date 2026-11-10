@@ -2,9 +2,6 @@
 
     namespace Anjan011\RolesAndPermissions;
 
-    use Illuminate\Console\Events\CommandFinished;
-    use Illuminate\Support\Facades\Artisan;
-    use Illuminate\Support\Facades\Event;
     use Illuminate\Support\ServiceProvider;
 
     class RolesAndPermissionsServiceProvider extends ServiceProvider
@@ -60,12 +57,35 @@
                     Console\DumpPermissionsCommand::class,
                 ]);
 
-                // Listen for package:discover completion
-                Event::listen(CommandFinished::class, function (CommandFinished $event) {
-                    if ($event->command === 'package:discover') {
-                        Artisan::call('anjan011-roles-permissions:setup-instructions', [], $event->output);
-                    }
-                });
+                // Print setup instructions directly when package is discovered
+                if (isset($_SERVER['argv']) && in_array('package:discover', $_SERVER['argv'])) {
+                    $this->printSetupInstructions();
+                }
             }
+        }
+
+        /**
+         * Print formatted setup instructions to STDOUT.
+         */
+        protected function printSetupInstructions(): void
+        {
+            fwrite(STDOUT, "\n");
+            fwrite(STDOUT, "\033[1;32m====================================================================\033[0m\n");
+            fwrite(STDOUT, "\033[1;32m    anjan011/roles-and-permissions - Setup Instructions\033[0m\n");
+            fwrite(STDOUT, "\033[1;32m====================================================================\033[0m\n\n");
+
+            fwrite(STDOUT, "\033[1;33m1. Check and Edit the config file if needed:\033[0m\n");
+            fwrite(STDOUT, "   Path: config/anjan001/roles-and-permissions.php\n\n");
+
+            fwrite(STDOUT, "\033[1;33m2. Add the `UseRolesAndPermissions` trait to the User model:\033[0m\n");
+            fwrite(STDOUT, "   File: app/Models/User.php\n");
+            fwrite(STDOUT, "   Trait: Anjan011\\RolesAndPermissions\\Traits\\UseRolesAndPermissions\n\n");
+
+            fwrite(STDOUT, "\033[1;33m3. Perform the setup artisan command:\033[0m\n");
+            fwrite(STDOUT, "   Command: php artisan anjan011-roles-permissions:setup\n\n");
+            fwrite(STDOUT, "   Note: This setup command will perform the migration and seed the\n");
+            fwrite(STDOUT, "   database with default roles and permissions.\n\n");
+
+            fwrite(STDOUT, "\033[1;32m====================================================================\033[0m\n\n");
         }
     }

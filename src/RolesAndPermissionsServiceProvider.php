@@ -2,6 +2,8 @@
 
     namespace Anjan011\RolesAndPermissions;
 
+    use Illuminate\Console\Events\CommandStarting;
+    use Illuminate\Support\Facades\Event;
     use Illuminate\Support\ServiceProvider;
 
     class RolesAndPermissionsServiceProvider extends ServiceProvider
@@ -57,12 +59,14 @@
                     Console\DumpPermissionsCommand::class,
                 ]);
 
-                // Execute setup instructions output automatically when `composer require` runs package discovery
-                if (isset($_SERVER['argv']) && in_array('package:discover', $_SERVER['argv'])) {
-                    $this->app->booted(function () {
-                        $this->call(Console\SetupInstructionsCommand::class);
-                    });
-                }
+                // Listen for the package:discover command execution
+                Event::listen(CommandStarting::class, function (CommandStarting $event) {
+                    if ($event->command === 'package:discover') {
+                        $this->app->booted(function () {
+                            $this->call(Console\SetupInstructionsCommand::class);
+                        });
+                    }
+                });
             }
         }
     }

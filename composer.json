@@ -24,5 +24,10 @@
                 "Anjan011\\RolesAndPermissions\\RolesAndPermissionsServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@php artisan anjan011-roles-permissions:setup-instructions --ansi"
+        ]
     }
 }
